@@ -1,18 +1,16 @@
-﻿@using Company.PL.Dtos
-@model CreateDepartmentDto
+﻿@model Department
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create Department</h1>
+<h1>Edit Department</h1>
 <br />
 <br />
 
-
-<form asp-action="Create">
+<form asp-action="Edit">
     <div class="my-3">
         <label asp-for="Code" class="col-form-label"></label>
-        <input asp-for="Code" class="form-control"/>
+        <input asp-for="Code" class="form-control" />
         <span asp-validation-for="Code" class="text-danger"></span>
     </div>
     <div class="my-3">
@@ -26,7 +24,7 @@
         <span asp-validation-for="CreateAt" class="text-danger"></span>
     </div>
     <div class="my-3">
-        <input type="submit" value="Create" class="btn btn-primary"/>
+        <input type="submit" value="Save" class="btn btn-warning" />
         <a asp-action="Index" class="btn btn-light">Back To List</a>
     </div>
 
