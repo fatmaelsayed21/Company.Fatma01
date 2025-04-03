@@ -50,13 +50,76 @@ namespace Company.PL.Controllers
             return View(model);
 
         }
+
+
+
         [HttpGet]
-        public IActionResult Details(int? id) {
+        public IActionResult Details(int? id , string ViewName="Details") {
 
             if (id == null)  return BadRequest("Invalid Id"); //400
            var department= _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
             if (department is null) return NotFound(new {statusCode=404,message =$" Department with id {id} is not found" });
         
+            return View(ViewName,department);
+        }
+
+
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+
+            //if (id == null) return BadRequest("Invalid Id"); //400
+            //var department = _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
+            //if (department is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
+
+            return Details(id,"Edit");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([FromRoute]int id,Department department)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if(id!=department.Id) return BadRequest(); //400
+                var count = _departmentRepository.Update(department);
+                if (count > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            return View(department);
+        }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+
+            //if (id == null) return BadRequest("Invalid Id"); //400
+            //var department = _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
+            //if (department is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
+
+            return Details(id,"Delete");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete([FromRoute] int id, Department department)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (id != department.Id) return BadRequest(); //400
+                var count = _departmentRepository.Delete(department);
+                if (count > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
             return View(department);
         }
 
