@@ -48,6 +48,17 @@ namespace Company.PL.Controllers
                 }
             }
             return View(model);
+
         }
+        [HttpGet]
+        public IActionResult Details(int? id) {
+
+            if (id == null)  return BadRequest("Invalid Id"); //400
+           var department= _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
+            if (department is null) return NotFound(new {statusCode=404,message =$" Department with id {id} is not found" });
+        
+            return View(department);
+        }
+
     }
 }
