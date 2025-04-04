@@ -14,6 +14,7 @@ namespace Company.Fatma01
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>(); //allow dependency injection for department repository
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddDbContext<CompanyDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default_Connection"));
