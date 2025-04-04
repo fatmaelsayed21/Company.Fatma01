@@ -9,10 +9,6 @@ namespace Company.BLL.Interfaces
 {
     public interface IEmployeeRepository :IGenericRepository<Employee>
     {
-        //IEnumerable<Employee> GetAll();
-        //Employee? Get(int id);
-        //int Add(Employee model);
-        //int Update(Employee model);
-        //int Delete(Employee model);
+        List<Employee> GetbyName(string name);
     }
 }
