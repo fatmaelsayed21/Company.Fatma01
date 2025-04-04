@@ -1,6 +1,7 @@
 using Company.BLL.Interfaces;
 using Company.BLL.Repositories;
 using Company.DAL.Data.Contexts;
+using Company.PL.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Fatma01
@@ -19,6 +20,14 @@ namespace Company.Fatma01
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default_Connection"));
             }); //allow di to company db context
+
+
+
+                //builder.Services.AddAutoMapper(typeof(EmployeeProfile));
+
+
+            builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

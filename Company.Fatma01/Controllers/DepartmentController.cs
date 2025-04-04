@@ -68,22 +68,38 @@ namespace Company.PL.Controllers
         public IActionResult Edit(int? id)
         {
 
-            //if (id == null) return BadRequest("Invalid Id"); //400
-            //var department = _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
-            //if (department is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
+            if (id == null) return BadRequest("Invalid Id"); //400
+            var department = _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
+            if (department is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
 
-            return Details(id,"Edit");
+            var departmentDto = new CreateDepartmentDto()
+            {
+                Code = department.Code,
+                Name = department.Name,
+                CreateAt = department.CreateAt
+
+            };
+
+            return View(departmentDto);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([FromRoute]int id,Department department)
+        public IActionResult Edit([FromRoute]int id,CreateDepartmentDto model)
         {
 
             if (ModelState.IsValid)
             {
-                if(id!=department.Id) return BadRequest(); //400
+                //if(id!=department.Id) return BadRequest(); //400
+
+                var department = new Department()
+                {
+                    Code = model.Code,
+                    Name = model.Name,
+                    CreateAt = model.CreateAt
+
+                };
                 var count = _departmentRepository.Update(department);
                 if (count > 0)
                 {
@@ -91,7 +107,7 @@ namespace Company.PL.Controllers
                 }
             }
 
-            return View(department);
+            return View(model);
         }
         [HttpGet]
         public IActionResult Delete(int? id)
