@@ -125,6 +125,7 @@ namespace Company.PL.Controllers
 
                 //};
                 var employee = _mapper.Map<Employee>(model);
+                employee.Id = id;
                 var count = _EmployeeRepository.Update(employee);
                 if (count > 0)
                 {

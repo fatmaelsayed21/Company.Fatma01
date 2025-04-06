@@ -87,6 +87,7 @@ namespace Company.PL.Controllers
 
             //};
             var dto = _mapper.Map<CreateDepartmentDto>(department);
+            
 
             return View(dto);
         }
@@ -109,6 +110,7 @@ namespace Company.PL.Controllers
 
                 //};
                 var department = _mapper.Map<Department>(model);
+                department.Id = id;
                 var count = _departmentRepository.Update(department);
                 if (count > 0)
                 {
