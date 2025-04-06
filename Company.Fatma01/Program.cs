@@ -1,3 +1,4 @@
+using Company.BLL;
 using Company.BLL.Interfaces;
 using Company.BLL.Repositories;
 using Company.DAL.Data.Contexts;
@@ -14,8 +15,8 @@ namespace Company.Fatma01
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>(); //allow dependency injection for department repository
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>(); //allow dependency injection for department repository
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddDbContext<CompanyDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default_Connection"));
@@ -28,7 +29,7 @@ namespace Company.Fatma01
 
             builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
             builder.Services.AddAutoMapper(M => M.AddProfile(new DepartmentProfile()));
-
+            builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
