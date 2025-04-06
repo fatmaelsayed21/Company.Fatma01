@@ -8,8 +8,8 @@ namespace Company.PL.Mapping
     {
         public EmployeeProfile()
         {
-            CreateMap<CreateEmployeeDto, Employee>().ReverseMap();
-            //CreateMap<Employee, CreateEmployeeDto>();
+            CreateMap<CreateEmployeeDto, Employee>();
+            CreateMap<Employee, CreateEmployeeDto>();
         }
     }
 }
