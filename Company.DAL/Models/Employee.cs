@@ -22,8 +22,9 @@ namespace Company.DAL.Models
 
         public DateTime CreateAt { get; set; }
         [DisplayName("Department")]
-        public int? DepartmentId { get; set; }
+        public int? DepartmentId { get; set; } //FK
         public Department? Department { get; set; }
+        public string? ImageName { get; set; }
 
     }
 }

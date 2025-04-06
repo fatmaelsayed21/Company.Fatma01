@@ -2,6 +2,7 @@
 using Company.BLL.Interfaces;
 using Company.DAL.Models;
 using Company.PL.Dtos;
+using Company.PL.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.PL.Controllers
@@ -59,13 +60,22 @@ namespace Company.PL.Controllers
         {
             if (ModelState.IsValid)    //server side validation
             {
-                
-               var employee= _mapper.Map<Employee>(model);
+
+                if (model.Image is not null)
+                {
+                   model.ImageName = DocumentSettings.UploadFile(model.Image, "Images");
+                }
+
+
+
+                var employee= _mapper.Map<Employee>(model);
 
                 _unitOfWork.EmployeeRepository.Add(employee);
+               
                 var count = _unitOfWork.Complete();
                 if (count > 0)
                 {
+
                     TempData["Message"] = "Employee is Created !!";
                     return RedirectToAction(nameof(Index));
                 }
@@ -113,23 +123,17 @@ namespace Company.PL.Controllers
 
             if (ModelState.IsValid)
             {
-                //if (id != employee.Id) return BadRequest(); //400
-                //var employee = new Employee()
-                //{
-                //    Id= id,
-                //    Name = model.Name,
-                //    Address = model.Address,
-                //    Age = model.Age,
-                //    CreateAt = model.CreateAt,
-                //    HiringDate = model.HiringDate,
-                //    Email = model.Email,
-                //    IsActive = model.IsActive,
-                //    IsDeleted = model.IsDeleted,
-                //    Phone = model.Phone,
-                //    Salary = model.Salary,
-                //    DepartmentId = model.DepartmentId
 
-                //};
+
+                if(model.ImageName is not null && model.Image is not null)
+                {
+                    DocumentSettings.DeleteFile(model.ImageName,"Images");
+                }
+                if (model.Image is not null)
+                {
+                  model.ImageName=  DocumentSettings.UploadFile(model.Image, "Images");
+                }
+
                 var employee = _mapper.Map<Employee>(model);
                 employee.Id = id;
                  _unitOfWork.EmployeeRepository.Update(employee);
@@ -169,6 +173,10 @@ namespace Company.PL.Controllers
                 var count = _unitOfWork.Complete();
                 if (count > 0)
                 {
+                    if (model.ImageName is not null) {
+                        DocumentSettings.DeleteFile(model.ImageName, "Images");
+                    }
+                    
                     return RedirectToAction(nameof(Index));
                 }
             }
