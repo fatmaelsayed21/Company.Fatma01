@@ -1,4 +1,5 @@
-﻿@model Employee
+﻿@using Company.PL.Dtos
+@model CreateEmployeeDto
 <div class="my-3">
     <label asp-for="Name" class="col-form-label"></label>
     <input asp-for="Name" class="form-control" readonly />
@@ -50,7 +51,7 @@
 
 </div>
 <div class="my-3">
-    <label asp-for="Department" class="col-form-label"></label>
-    <input asp-for="Department.Name" class="form-control" readonly />
+    <label asp-for="DepartmentName" class="col-form-label"></label>
+    <input asp-for="DepartmentName" class="form-control" readonly />
 
 </div>

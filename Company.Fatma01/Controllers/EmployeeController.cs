@@ -54,20 +54,7 @@ namespace Company.PL.Controllers
         {
             if (ModelState.IsValid)    //server side validation
             {
-                //var employee = new Employee()
-                //{
-                //    Name = model.Name,
-                //    Address = model.Address,
-                //    Age = model.Age,
-                //    CreateAt = model.CreateAt,
-                //    HiringDate = model.HiringDate,
-                //    Email = model.Email,
-                //    IsActive = model.IsActive,
-                //    IsDeleted = model.IsDeleted,
-                //    Phone = model.Phone,
-                //    Salary = model.Salary,
-                //    DepartmentId=model.DepartmentId
-                //};
+                
                var employee= _mapper.Map<Employee>(model);
 
                 var count = _EmployeeRepository.Add(employee);
@@ -90,8 +77,10 @@ namespace Company.PL.Controllers
             if (id == null) return BadRequest("Invalid Id"); //400
             var employee = _EmployeeRepository.Get(id.Value); //because get takes int id but details take nullable int id
             if (employee is null) return NotFound(new { statusCode = 404, message = $" Employee with id {id} is not found" });
-           
-            return View(ViewName, employee);
+
+            var Dto = _mapper.Map<CreateEmployeeDto>(employee);
+
+            return View(ViewName, Dto);
         }
 
 
@@ -119,22 +108,23 @@ namespace Company.PL.Controllers
             if (ModelState.IsValid)
             {
                 //if (id != employee.Id) return BadRequest(); //400
-                var employee = new Employee()
-                {
-                    Id= id,
-                    Name = model.Name,
-                    Address = model.Address,
-                    Age = model.Age,
-                    CreateAt = model.CreateAt,
-                    HiringDate = model.HiringDate,
-                    Email = model.Email,
-                    IsActive = model.IsActive,
-                    IsDeleted = model.IsDeleted,
-                    Phone = model.Phone,
-                    Salary = model.Salary,
-                    DepartmentId = model.DepartmentId
+                //var employee = new Employee()
+                //{
+                //    Id= id,
+                //    Name = model.Name,
+                //    Address = model.Address,
+                //    Age = model.Age,
+                //    CreateAt = model.CreateAt,
+                //    HiringDate = model.HiringDate,
+                //    Email = model.Email,
+                //    IsActive = model.IsActive,
+                //    IsDeleted = model.IsDeleted,
+                //    Phone = model.Phone,
+                //    Salary = model.Salary,
+                //    DepartmentId = model.DepartmentId
 
-                };
+                //};
+                var employee = _mapper.Map<Employee>(model);
                 var count = _EmployeeRepository.Update(employee);
                 if (count > 0)
                 {
@@ -152,17 +142,20 @@ namespace Company.PL.Controllers
             //var department = _departmentRepository.Get(id.Value); //because get takes int id but details take nullable int id
             //if (department is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
 
+
             return Details(id, "Delete");
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromRoute] int id, Employee employee)
+        public IActionResult Delete([FromRoute] int id, CreateEmployeeDto model)
         {
 
             if (ModelState.IsValid)
             {
+                var employee = _mapper.Map<Employee>(model);
+                employee.Id = id;
                 if (id != employee.Id) return BadRequest(); //400
                 var count = _EmployeeRepository.Delete(employee);
                 if (count > 0)
@@ -171,7 +164,7 @@ namespace Company.PL.Controllers
                 }
             }
 
-            return View(employee);
+            return View(model);
         }
     }
 }
