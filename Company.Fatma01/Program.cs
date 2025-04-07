@@ -5,6 +5,7 @@ using Company.DAL.Data.Contexts;
 using Company.DAL.Models;
 using Company.PL.Mapping;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Build.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Fatma01
@@ -35,6 +36,13 @@ namespace Company.Fatma01
 
             builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CompanyDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/SignIn";
+               
+
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -49,6 +57,7 @@ namespace Company.Fatma01
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
