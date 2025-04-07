@@ -1,0 +1,29 @@
+﻿@using Company.PL.Dtos
+@model SignInDto
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<div class="main-agileinfo">
+	<div class="agileits-top">
+		<div asp-validation-summary="All" class="m-3  alert alert-info">
+		</div>
+		<form asp-action="SignIn">
+			
+			<input class="text email" type="email" asp-for="Email" placeholder="Email" required="">
+			<input class="text" asp-for="Password" placeholder="Password" required="">
+			
+			<div class="wthree-text">
+				<label class="anim">
+					<input asp-for="RememberMe" class="checkbox" >
+					<span>Remember Me</span>
+				</label>
+				<div class="clear"> </div>
+			</div>
+			<input type="submit" value="SIGNIN">
+		</form>
+		<p>Do You Have Account? <a asp-action="SignUp"> Create New Account?</a></p>
+	</div>
+</div>
+

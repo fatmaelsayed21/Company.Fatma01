@@ -3,11 +3,13 @@ using Company.BLL.Interfaces;
 using Company.BLL.Repositories;
 using Company.DAL.Models;
 using Company.PL.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.PL.Controllers
 {
     //MVC Controller
+    [Authorize]
     public class DepartmentController : Controller
     {
         //private readonly IDepartmentRepository _departmentRepository;
