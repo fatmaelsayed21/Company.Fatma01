@@ -2,7 +2,9 @@ using Company.BLL;
 using Company.BLL.Interfaces;
 using Company.BLL.Repositories;
 using Company.DAL.Data.Contexts;
+using Company.DAL.Models;
 using Company.PL.Mapping;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Fatma01
@@ -30,6 +32,9 @@ namespace Company.Fatma01
             builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
             builder.Services.AddAutoMapper(M => M.AddProfile(new DepartmentProfile()));
             builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CompanyDbContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
