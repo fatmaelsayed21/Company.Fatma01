@@ -34,7 +34,9 @@ namespace Company.Fatma01
             builder.Services.AddAutoMapper(M => M.AddProfile(new DepartmentProfile()));
             builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CompanyDbContext>();
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<CompanyDbContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(config =>
             {
