@@ -93,10 +93,10 @@ namespace Company.PL.Controllers
         {
 
             if (id == null) return BadRequest("Invalid Id"); //400
-            var employee = await _unitOfWork.EmployeeRepository.GetAsync(id.Value); //because get takes int id but details take nullable int id
+            var employee = await _unitOfWork.EmployeeRepository.GetByIdAsync(id.Value); //because get takes int id but details take nullable int id
             if (employee is null) return NotFound(new { statusCode = 404, message = $" Employee with id {id} is not found" });
 
-            var Dto = _mapper.Map<CreateEmployeeDto>(employee);
+            var Dto = _mapper.Map<Employee>(employee);
 
             return View(ViewName, Dto);
         }
@@ -109,7 +109,7 @@ namespace Company.PL.Controllers
             ViewData["departments"] = departments;
 
             if (id == null) return BadRequest("Invalid Id"); //400
-            var employee = await _unitOfWork.EmployeeRepository.GetAsync(id.Value); //because get takes int id but details take nullable int id
+            var employee = await _unitOfWork.EmployeeRepository.GetByIdAsync(id.Value); //because get takes int id but details take nullable int id
             if (employee is null) return NotFound(new { statusCode = 404, message = $" Department with id {id} is not found" });
             var Dto = _mapper.Map<CreateEmployeeDto>(employee);
 
@@ -163,7 +163,7 @@ namespace Company.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete([FromRoute] int id, CreateEmployeeDto model)
+        public async Task<IActionResult> Delete([FromRoute] int id, Employee model)
         {
 
             if (ModelState.IsValid)

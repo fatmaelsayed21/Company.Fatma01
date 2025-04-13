@@ -8,11 +8,15 @@ using Company.DAL.Models;
 namespace Company.BLL.Interfaces
 {
     public interface IDepartmentRepository : IGenericRepository<Department>
+
     {
+      
+        Task<List<Department>> GetByNameAsync(string name);
         //IEnumerable<Department> GetAll();
         //Department? Get(int id);
         //int Add(Department model);
         //int Update(Department model);
         //int Delete(Department model);
+       
     }
 }
