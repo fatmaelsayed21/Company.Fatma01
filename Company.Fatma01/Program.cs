@@ -38,12 +38,15 @@ namespace Company.Fatma01
                 .AddEntityFrameworkStores<CompanyDbContext>()
                 .AddDefaultTokenProviders();
 
-            builder.Services.ConfigureApplicationCookie(config =>
+            builder.Services.ConfigureApplicationCookie(options =>
             {
-                config.LoginPath = "/Account/SignIn";
-               
+                options.LoginPath = "/Account/SignIn";
+                options.AccessDeniedPath = "/Account/AccessDenied";
 
             });
+
+          
+
 
             var app = builder.Build();
 

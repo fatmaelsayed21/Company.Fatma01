@@ -163,6 +163,7 @@ namespace Company.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id, Employee model)
         {
 

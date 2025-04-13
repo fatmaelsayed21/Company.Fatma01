@@ -140,7 +140,8 @@ namespace Company.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-       
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete([FromRoute] int? id, Department model)
         {
             if (id is null) return BadRequest($" This Id = {id} InValid");

@@ -1,11 +1,13 @@
 ﻿using Company.DAL.Models;
 using Company.PL.Dtos;
 using Company.PL.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.PL.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

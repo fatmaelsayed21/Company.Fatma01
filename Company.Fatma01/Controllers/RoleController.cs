@@ -1,6 +1,7 @@
 ﻿using Company.DAL.Models;
 using Company.PL.Dtos;
 using Company.PL.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace Company.PL.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

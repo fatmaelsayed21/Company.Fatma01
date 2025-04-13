@@ -2,6 +2,7 @@
 using Company.Fatma01.Controllers;
 using Company.PL.Dtos;
 using Company.PL.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Company.PL.Controllers
 {
+   
     public class AccountController : Controller
 
 
@@ -229,5 +231,17 @@ namespace Company.PL.Controllers
             return View(model);
         }
         #endregion
+
+
+        [HttpGet]
+
+        public IActionResult AccessDenied() 
+        {
+        
+         
+            return View();
+            
+
+        }
     }
 }
