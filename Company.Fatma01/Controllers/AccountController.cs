@@ -205,39 +205,29 @@ namespace Company.PL.Controllers
         }
 
         [HttpPost]
+       
         public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
         {
-
-            if (ModelState.IsValid) 
-            { 
+            if (ModelState.IsValid)
+            {
                 var email = TempData["email"] as string;
                 var token = TempData["token"] as string;
 
-                if (email == null || token == null) return BadRequest("Invalid Operation!");
-                 var user =await  _userManager.FindByEmailAsync(email);
-
-
-                if ( user is not null)
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user is not null)
                 {
-                    var result = await  _userManager.ResetPasswordAsync(user, token,model.NewPassword);
+                    var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("SignIn");
-                        
+                        return RedirectToAction(nameof(SignIn));
                     }
-
                 }
-                ModelState.AddModelError("","Invalid Reset Password Operation");
-
-
 
             }
+            ModelState.AddModelError(string.Empty, "Invalid Operation, Please Try Again !!");
 
-
-            return View();
-            
-
+            return View(model);
         }
-       #endregion
+        #endregion
     }
 }
